@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkhsw2yf1xr4l"]
+
+[ext_resource type="Script" path="res://pin.gd" id="1_ohhcd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8yjio"]
+radius = 8.0
+
+[node name="Pin" type="Node2D"]
+script = ExtResource("1_ohhcd")
+
+[node name="Mode" type="Node2D" parent="."]
+
+[node name="In" type="Polygon2D" parent="Mode"]
+color = Color(0.66, 0.4906, 0.297, 1)
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[node name="Out" type="Polygon2D" parent="Mode"]
+visible = false
+color = Color(0.32549, 0.658824, 0.298039, 1)
+polygon = PackedVector2Array(0, -8, 8, 0, 0, 8, -8, 0)
+
+[node name="in_sensor" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="in_sensor"]
+shape = SubResource("CircleShape2D_8yjio")
+
+[connection signal="input_event" from="in_sensor" to="." method="_on_in_sensor_input_event"]
+[connection signal="mouse_entered" from="in_sensor" to="." method="_on_in_sensor_mouse_entered"]
+[connection signal="mouse_exited" from="in_sensor" to="." method="_on_in_sensor_mouse_exited"]

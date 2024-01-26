@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxddpnomd6v2q"]
+
+[ext_resource type="Script" path="res://block.gd" id="1_4abhd"]
+[ext_resource type="PackedScene" uid="uid://bkhsw2yf1xr4l" path="res://pin.tscn" id="2_31ofj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2prpb"]
+size = Vector2(96, 48)
+
+[node name="Block" type="Node2D"]
+script = ExtResource("1_4abhd")
+
+[node name="Outline" type="Line2D" parent="."]
+points = PackedVector2Array(-48, 16, -48, -16, -40, -24, 40, -24, 48, -16, 48, 16, 40, 24, -40, 24)
+closed = true
+width = 3.0
+default_color = Color(0.7, 0.71, 0.71, 1)
+
+[node name="Shape" type="Polygon2D" parent="."]
+color = Color(0.196078, 0.196078, 0.196078, 1)
+polygon = PackedVector2Array(-48, -16, -40, -24, 40, -24, 48, -16, 48, 16, 40, 24, -40, 24, -48, 16)
+
+[node name="Out" parent="." instance=ExtResource("2_31ofj")]
+position = Vector2(48, 0)
+mode = 1
+
+[node name="In" parent="." instance=ExtResource("2_31ofj")]
+position = Vector2(-48, 0)
+
+[node name="Selection" type="Area2D" parent="."]
+
+[node name="ShapeRect" type="CollisionShape2D" parent="Selection"]
+shape = SubResource("RectangleShape2D_2prpb")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -24.5
+offset_right = 20.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "sadf
+asdfasdf"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="mouse_down" from="Out" to="." method="_on_out_mouse_down"]
+[connection signal="mouse_entered" from="Out" to="." method="_on_inout_mouse_entered"]
+[connection signal="mouse_leave" from="Out" to="." method="_on_inout_mouse_leave"]
+[connection signal="stop_called" from="Out" to="." method="_on_out_stop_called"]
+[connection signal="exec_called" from="In" to="." method="_on_in_exec_called"]
+[connection signal="mouse_down" from="In" to="." method="_on_inout_mouse_down"]
+[connection signal="mouse_entered" from="In" to="." method="_on_inout_mouse_entered"]
+[connection signal="mouse_leave" from="In" to="." method="_on_inout_mouse_leave"]
+[connection signal="input_event" from="Selection" to="." method="_on_selection_input_event"]
+[connection signal="mouse_entered" from="Selection" to="." method="_on_selection_mouse_entered"]
+[connection signal="mouse_exited" from="Selection" to="." method="_on_selection_mouse_exited"]

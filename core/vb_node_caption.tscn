@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://c63i3gcejfpw2"]
+
+[ext_resource type="Script" path="res://core/vb_node_caption.gd" id="1_o0m31"]
+
+[node name="VBNodeCaption" type="VBoxContainer"]
+script = ExtResource("1_o0m31")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Заголовок"
+text_overrun_behavior = 1
+
+[node name="CaptionEdit" type="LineEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Заголовок блока"
+
+[connection signal="text_changed" from="CaptionEdit" to="." method="_on_caption_edit_text_changed"]

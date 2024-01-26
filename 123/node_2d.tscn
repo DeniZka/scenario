@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdr44p0d85e6i"]
+
+[ext_resource type="Script" path="res://123/node_2d.gd" id="1_bdb4w"]
+
+[sub_resource type="Curve2D" id="Curve2D_kiclh"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 88, 48, -159.181, 98.683, 297.133, -184.205, 224, 96, 61.125, -103.054, -75.0039, 126.454, 496, 192, 77.3629, 129.602, -16.6142, -27.8329, 232, 288, 0, 0, 0, 0, 112, 304)
+}
+point_count = 5
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_bdb4w")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(-8, 128)
+curve = SubResource("Curve2D_kiclh")
+
+[node name="Line2D" type="Line2D" parent="Path2D"]
+
+[node name="Button" type="Button" parent="."]
+offset_left = 448.0
+offset_top = 64.0
+offset_right = 522.0
+offset_bottom = 95.0
+text = "asdfasdf"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

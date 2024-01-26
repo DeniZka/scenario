@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://deo0idf4meqfr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8cavs"]
+radius = 24.0
+
+[node name="Out" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.32549, 0.658824, 0.298039, 1)
+polygon = PackedVector2Array(0, -8, 8, 0, 0, 8, -8, 0)
+
+[node name="in_sensor" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="in_sensor"]
+shape = SubResource("CircleShape2D_8cavs")

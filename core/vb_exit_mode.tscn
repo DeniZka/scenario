@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5j3a0jl1osf1"]
+
+[ext_resource type="Script" path="res://core/vb_exit_mode.gd" id="1_0lhht"]
+
+[node name="VBExitMode" type="VBoxContainer"]
+script = ExtResource("1_0lhht")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Режим выхода"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+tooltip_text = "Фиксирующий - выход остается активным даже после изменения условий
+Следящий - состояние выхода изменяется при изменений условий"
+item_count = 2
+selected = 0
+popup/item_0/text = "Фиксирующий"
+popup/item_0/id = 0
+popup/item_1/text = "Следящий"
+popup/item_1/id = 1
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_option_button_item_selected"]

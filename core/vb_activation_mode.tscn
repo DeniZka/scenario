@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://6umpqn37h7qw"]
+
+[ext_resource type="Script" path="res://core/vb_activation_mode.gd" id="1_hmijd"]
+
+[node name="VBActivationMode" type="VBoxContainer"]
+script = ExtResource("1_hmijd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Режим входа"
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+tooltip_text = "Синхронизация входа на выолнение блока
+Только все И - ожидание сигнала от всех входов до выполнения
+Любой ИЛИ -выполнение при сигнализации от любого входа
+Только первый - выполнение только по первому сигнал любого входа. Остальные блокируются"
+item_count = 3
+selected = 0
+popup/item_0/text = "Только все \"И\""
+popup/item_0/id = 0
+popup/item_1/text = "Только первый"
+popup/item_1/id = 1
+popup/item_2/text = "Любой  \"ИЛИ\""
+popup/item_2/id = 2
+
+[connection signal="item_selected" from="OptionButton" to="." method="_on_option_button_item_selected"]

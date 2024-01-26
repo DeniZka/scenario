@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3sjuhkxfrgy1"]
+
+[ext_resource type="PackedScene" uid="uid://ck18j5t3pby6l" path="res://chain_in.tscn" id="1_3hi3p"]
+[ext_resource type="Script" path="res://exec.gd" id="1_urr7q"]
+[ext_resource type="PackedScene" uid="uid://deo0idf4meqfr" path="res://chain_out.tscn" id="2_xkg64"]
+
+[node name="exec" type="Node2D"]
+script = ExtResource("1_urr7q")
+
+[node name="body" type="Polygon2D" parent="."]
+color = Color(0.196078, 0.196078, 0.196078, 1)
+polygon = PackedVector2Array(-48, -24, 48, -24, 48, 24, -48, 24)
+
+[node name="in" parent="." instance=ExtResource("1_3hi3p")]
+position = Vector2(-48, 0)
+
+[node name="out" parent="." instance=ExtResource("2_xkg64")]
+position = Vector2(48, 0)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -24.0
+offset_right = 40.0
+offset_bottom = 24.0
+text = "EDIT"
+horizontal_alignment = 1
+vertical_alignment = 1

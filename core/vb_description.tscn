@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6ogaq6wk2aam"]
+
+[ext_resource type="Script" path="res://core/vb_description.gd" id="1_yxn60"]
+
+[node name="VBDescription" type="VBoxContainer"]
+script = ExtResource("1_yxn60")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 2
+text = "Описание"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+custom_minimum_size = Vector2(0, 61.715)
+layout_mode = 2
+placeholder_text = "Описание блока"
+
+[connection signal="text_changed" from="TextEdit" to="." method="_on_text_edit_text_changed"]

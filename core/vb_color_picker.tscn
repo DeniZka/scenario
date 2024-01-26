@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuuaxnqpn7s5w"]
+
+[ext_resource type="Script" path="res://core/vb_color_picker.gd" id="1_h868n"]
+
+[node name="VBColorPicker" type="VBoxContainer"]
+size_flags_horizontal = 3
+script = ExtResource("1_h868n")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Цвет
+"
+text_overrun_behavior = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 79.6)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 5
+
+[connection signal="resized" from="ScrollContainer/GridContainer" to="." method="_on_grid_container_resized"]

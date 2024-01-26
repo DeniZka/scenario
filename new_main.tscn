@@ -1,0 +1,115 @@
+[gd_scene load_steps=10 format=3 uid="uid://54hw83xg377p"]
+
+[ext_resource type="Script" path="res://new_main.gd" id="1_afun3"]
+[ext_resource type="PackedScene" uid="uid://c71ndsjf6u18m" path="res://graph_edit.tscn" id="1_l7fvt"]
+[ext_resource type="PackedScene" uid="uid://xcfsw8oy5vr0" path="res://core/vb_colors.tscn" id="2_g8j6o"]
+[ext_resource type="PackedScene" uid="uid://cuuaxnqpn7s5w" path="res://core/vb_color_picker.tscn" id="4_mimii"]
+[ext_resource type="PackedScene" uid="uid://c63i3gcejfpw2" path="res://core/vb_node_caption.tscn" id="4_ovmah"]
+[ext_resource type="PackedScene" uid="uid://b6ogaq6wk2aam" path="res://core/vb_description.tscn" id="5_mrmuw"]
+[ext_resource type="PackedScene" uid="uid://6umpqn37h7qw" path="res://core/vb_activation_mode.tscn" id="7_vhvme"]
+[ext_resource type="PackedScene" uid="uid://b5j3a0jl1osf1" path="res://core/vb_exit_mode.tscn" id="8_6eg2t"]
+[ext_resource type="PackedScene" uid="uid://b1pnqetcbqp4t" path="res://core/push_pop_tester.tscn" id="9_5tbhw"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_afun3")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 649.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 935
+
+[node name="GraphEdit" parent="HSplitContainer" instance=ExtResource("1_l7fvt")]
+custom_minimum_size = Vector2(600, 200)
+layout_mode = 2
+scroll_offset = Vector2(-312, -208)
+
+[node name="VSplitContainer" type="VSplitContainer" parent="HSplitContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 219.355)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBColors" parent="HSplitContainer/VSplitContainer/ScrollContainer" instance=ExtResource("2_g8j6o")]
+layout_mode = 2
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="HSplitContainer/VSplitContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="DefaultNodeProperties" type="VBoxContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBNodeCaption" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties" instance=ExtResource("4_ovmah")]
+layout_mode = 2
+
+[node name="VBDescription" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties" instance=ExtResource("5_mrmuw")]
+layout_mode = 2
+
+[node name="VBColorPicker" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties" instance=ExtResource("4_mimii")]
+layout_mode = 2
+
+[node name="VBActivationMode" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties" instance=ExtResource("7_vhvme")]
+layout_mode = 2
+
+[node name="VBExitMode" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties" instance=ExtResource("8_6eg2t")]
+layout_mode = 2
+
+[node name="VBExecs" type="VBoxContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs"]
+layout_mode = 2
+text = "Действия"
+
+[node name="BoxContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs" instance=ExtResource("9_5tbhw")]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs"]
+custom_minimum_size = Vector2(0, 104.365)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs/ScrollContainer"]
+layout_mode = 2
+
+[node name="VBChecks" type="VBoxContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBChecks"]
+layout_mode = 2
+text = "Проверки"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBChecks"]
+custom_minimum_size = Vector2(0, 104.365)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBChecks/ScrollContainer"]
+layout_mode = 2
+
+[connection signal="node_deselected" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
+[connection signal="node_selected" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
+[connection signal="color_added" from="HSplitContainer/VSplitContainer/ScrollContainer/VBColors" to="." method="_on_vb_colors_color_added"]
+[connection signal="color_changed" from="HSplitContainer/VSplitContainer/ScrollContainer/VBColors" to="." method="_on_vb_colors_color_changed"]
+[connection signal="color_removed" from="HSplitContainer/VSplitContainer/ScrollContainer/VBColors" to="." method="_on_vb_colors_color_removed"]
+[connection signal="caption_changed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBNodeCaption" to="." method="_on_vb_node_caption_caption_changed"]
+[connection signal="description_changed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBDescription" to="." method="_on_vb_description_description_changed"]
+[connection signal="node_color_selected" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBColorPicker" to="." method="_on_vb_color_picker_node_color_selected"]
+[connection signal="input_mode_changed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBActivationMode" to="." method="_on_vb_activation_mode_input_mode_changed"]
+[connection signal="output_mode_changed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExitMode" to="." method="_on_vb_exit_mode_output_mode_changed"]
+[connection signal="pop1_pressed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs/BoxContainer" to="." method="_on_box_container_pop_1_pressed"]
+[connection signal="pop2_pressed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs/BoxContainer" to="." method="_on_box_container_pop_2_pressed"]
+[connection signal="push1_pressed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs/BoxContainer" to="." method="_on_box_container_push_1_pressed"]
+[connection signal="push2_pressed" from="HSplitContainer/VSplitContainer/ScrollContainer2/DefaultNodeProperties/VBExecs/BoxContainer" to="." method="_on_box_container_push_2_pressed"]

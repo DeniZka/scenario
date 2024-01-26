@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://di3ch1p8o42cf"]
+
+[ext_resource type="Script" path="res://core/color_button.gd" id="1_v4aaf"]
+
+[node name="BtnColor" type="Button"]
+custom_minimum_size = Vector2(30, 30)
+toggle_mode = true
+script = ExtResource("1_v4aaf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+offset_right = 30.0
+offset_bottom = 30.0
+mouse_filter = 1
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
