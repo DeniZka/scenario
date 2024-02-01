@@ -2,7 +2,7 @@ class_name ScenarioPipe
 extends RefCounted
 
 signal token_ready() #for consumer
-signal token_taken(empty: bool) #for sender
+signal token_taken(pipe: ScenarioPipe, empty: bool) #for sender
 
 var owner: String
 var consumers : Dictionary = {}
@@ -16,7 +16,7 @@ func push(token: ScenarioToken):
 func pop(consumer_name: String = ""):
 	pass
 	
-func got(consumer_name: String = ""):
+func has(consumer_name: String = ""):
 	pass
 		
 func pick(consumer_name: String = ""):

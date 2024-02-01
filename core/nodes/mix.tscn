@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgixsbsurfj2t"]
+
+[ext_resource type="Script" path="res://core/nodes/mix.gd" id="1_nlll5"]
+[ext_resource type="Texture2D" uid="uid://bbuffg76k6uwg" path="res://icons/merge.svg" id="1_px0df"]
+
+[node name="Mix" type="GraphNode"]
+offset_right = 9.0
+offset_bottom = 55.0
+title = "Сведение"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = ExtResource("1_px0df")
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_nlll5")
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+tooltip_text = "0-Ожидание всех входов
+N-Ожидание сигнала от N входов
+а затем закрытие входов"
+max_value = 10.0
+allow_greater = true
+
+[connection signal="value_changed" from="SpinBox" to="." method="_on_spin_box_value_changed"]

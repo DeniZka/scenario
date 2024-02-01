@@ -39,9 +39,13 @@ func _on_spreadnode_slot_removed(node: MyGraphNode, idx: int):
 
 func _on_play_pressed():
 	#get entrance nodes
+	var token : ScenarioToken = ScenarioToken.new()
+	for node in get_children():
+		if node is MyGraphNode:
+			node.reset()
 	for node in get_children():
 		if node is EntryGraphNode:
-			node.start()
+			node.start(token)
 
 func _input(event):
 	if event is InputEventKey:
@@ -252,7 +256,8 @@ func set_selected_color(color: StyleBoxFlat):
 
 #temp function for checking
 func _on_node_selected(node):
-	node.poop_info()
+	#node.poop_info()
+	pass
 	
 func set_node_caption(node, text):
 	node.set_caption(text)

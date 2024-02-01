@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://c71ndsjf6u18m"]
+[gd_scene load_steps=9 format=3 uid="uid://c71ndsjf6u18m"]
 
 [ext_resource type="Script" path="res://graph_edit.gd" id="1_75k0c"]
 [ext_resource type="PackedScene" uid="uid://cvbwx5byxr5w7" path="res://graph_popup_menu.tscn" id="3_8j88t"]
 [ext_resource type="PackedScene" uid="uid://dxgp44fyfchen" path="res://core/nodes/entry.tscn" id="3_60mli"]
 [ext_resource type="PackedScene" uid="uid://ciy2rb4j0ik2u" path="res://core/nodes/spread.tscn" id="4_ocotd"]
+[ext_resource type="PackedScene" uid="uid://dgixsbsurfj2t" path="res://core/nodes/mix.tscn" id="5_0pb22"]
+[ext_resource type="PackedScene" uid="uid://b77wq868esy3q" path="res://core/nodes/failure.tscn" id="6_mr3nj"]
+[ext_resource type="PackedScene" uid="uid://dtcjmfmlresst" path="res://core/nodes/timer.tscn" id="7_27ocd"]
+[ext_resource type="PackedScene" uid="uid://qltutiiy7jp7" path="res://core/nodes/compare.tscn" id="8_k7rlc"]
 
 [node name="GraphEdit" type="GraphEdit"]
 offset_right = 1152.0
@@ -18,12 +22,12 @@ visible = false
 
 [node name="Entry" parent="." instance=ExtResource("3_60mli")]
 layout_mode = 0
-offset_left = 184.0
-offset_top = 168.0
-offset_right = 232.0
-offset_bottom = 246.0
+offset_left = 160.0
+offset_top = 160.0
+offset_right = 208.0
+offset_bottom = 238.0
 mouse_filter = 1
-position_offset = Vector2(-344, -144)
+position_offset = Vector2(-368, -152)
 
 [node name="Spread" parent="." instance=ExtResource("4_ocotd")]
 layout_mode = 0
@@ -33,6 +37,60 @@ offset_right = 439.0
 offset_bottom = 198.0
 mouse_filter = 1
 position_offset = Vector2(-208, -200)
+
+[node name="Mix" parent="." instance=ExtResource("5_0pb22")]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 144.0
+offset_right = 951.0
+offset_bottom = 230.0
+mouse_filter = 1
+position_offset = Vector2(304, -168)
+
+[node name="Failure" parent="." instance=ExtResource("6_mr3nj")]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 432.0
+offset_right = 344.0
+offset_bottom = 677.0
+mouse_filter = 1
+position_offset = Vector2(-416, 120)
+
+[node name="Timer" parent="." instance=ExtResource("7_27ocd")]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 40.0
+offset_right = 840.0
+offset_bottom = 225.0
+mouse_filter = 1
+position_offset = Vector2(0, -272)
+
+[node name="Timer2" parent="." instance=ExtResource("7_27ocd")]
+layout_mode = 0
+offset_left = 1016.0
+offset_top = 120.0
+offset_right = 1328.0
+offset_bottom = 305.0
+mouse_filter = 1
+position_offset = Vector2(488, -192)
+
+[node name="Compare" parent="." instance=ExtResource("8_k7rlc")]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 328.0
+offset_right = 821.0
+offset_bottom = 492.0
+mouse_filter = 1
+position_offset = Vector2(0, 16)
+
+[node name="Compare2" parent="." instance=ExtResource("8_k7rlc")]
+layout_mode = 0
+offset_left = 536.0
+offset_top = 464.0
+offset_right = 829.0
+offset_bottom = 628.0
+mouse_filter = 1
+position_offset = Vector2(8, 152)
 
 [connection signal="connection_drag_started" from="." to="." method="_on_connection_drag_started"]
 [connection signal="connection_from_empty" from="." to="." method="_on_connection_from_empty"]

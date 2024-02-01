@@ -14,9 +14,9 @@ func pop(consumer_name: String = ""):
 	consumers[consumer_name] = null
 	for consumer in consumers:
 		if not consumers[consumer]:
-			token_taken.emit(false)
+			token_taken.emit(self, false)
 			return result
-	token_taken.emit(true)
+	token_taken.emit(self, true)
 	return result
 	
 func has(consumer_name: String = ""):

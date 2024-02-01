@@ -6,8 +6,9 @@ signal fill_changed(capacity_status: int)
 var fill_status = FILL_EMPTY
 
 var pipes: Array[ScenarioPipe]
-enum{MODE_SYNCHRONIZE, MODE_OVERWRITE}
+enum{MODE_SYNCHRONIZE, MODE_OVERWRITE, MODE_AWAIT}
 var mode: int = MODE_SYNCHRONIZE
+var sync_limit = 0   #0 - synchronize all inputs, 1 - sequental mode, 2+ await for N tokens
 
 func _init(owner_name: String, work_mode: int = MODE_SYNCHRONIZE):
 	super(owner_name)
@@ -16,6 +17,17 @@ func _init(owner_name: String, work_mode: int = MODE_SYNCHRONIZE):
 func connect_pipe(pipe: ScenarioPipe):
 	pipes.append(pipe)
 	pipe.token_ready.connect(_on_token_ready)
+	if pipe.has():
+		_on_token_ready()
+		
+func pop(consumer_name: String = ""):
+	if mode == MODE_AWAIT:
+		for pipe in pipes:
+			if pipe.has():
+				pipe.pop(owner)
+				return super.pop(consumer_name)
+	else:
+		return super.pop(consumer_name)
 	
 func disconnect_pipe(owner: String):
 	for pipe in pipes:
@@ -26,11 +38,12 @@ func disconnect_pipe(owner: String):
 
 func _on_token_ready():
 	if mode == MODE_SYNCHRONIZE:
+		#FIXME: collect tokens unitil sync_limit!!!!
 		var got_count = 0
 		#check every pipe got token
 		for pipe in pipes:
-			if pipe.got(owner):
-				got_count -= 1
+			if pipe.has(owner):
+				got_count += 1
 		if got_count == 0:
 			if fill_status != FILL_EMPTY:
 				fill_changed.emit(FILL_EMPTY)
@@ -45,12 +58,17 @@ func _on_token_ready():
 			for pipe in pipes:
 				token = pipe.pop(owner)
 			push(token)
+			fill_status = FILL_EMPTY
 		else:
 			if fill_status != FILL_EXIST:
 				fill_changed.emit(FILL_EXIST) #FIXME: send only once
 				fill_status = FILL_EXIST
-	else:
+	elif mode == MODE_OVERWRITE:
 		#push every in one
 		for pipe in pipes:
-			if pipe.got():
+			if pipe.has():
 				push(pipe.pop(owner))
+	else:
+		for pipe in pipes:
+			if pipe.has():
+				push(pipe.pick(owner))

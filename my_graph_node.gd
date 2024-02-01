@@ -11,12 +11,10 @@ extends GraphNode
 #accept offer
 const SEQ_PORT = 0
 const SYNC_PORT = 1
-var seq_pipe: ScenarioPipeOrganizer = ScenarioPipeOrganizer.new(name, ScenarioPipeOrganizer.MODE_OVERWRITE)
-var sync_pipe: ScenarioPipeOrganizer = ScenarioPipeOrganizer.new(name, ScenarioPipeOrganizer.MODE_SYNCHRONIZE)
+@onready var seq_pipe: ScenarioPipeOrganizer = ScenarioPipeOrganizer.new(name, ScenarioPipeOrganizer.MODE_OVERWRITE)
 const SHARED_PORT = 0
 const SPREAD_PORT = 1
-var shared_pipe: ScenarioSharedPipe = ScenarioSharedPipe.new(name)
-var spread_pipe: ScenarioSpreadPipe = ScenarioSpreadPipe.new(name)
+@onready var shared_pipe: ScenarioSharedPipe = ScenarioSharedPipe.new(name)
 
 signal finish()
 
@@ -52,28 +50,19 @@ enum{IOTYPE_PASS, IOTYPE_EXIT, IOTYPE_ENTRANCE}
 enum{IMODE_ALL = 0, IMODE_FIRST = 1, IMODE_ANY = 2}
 
 func _ready():
-	#put pipe in pipe
-	seq_pipe.connect_pipe(sync_pipe)
-	shared_pipe.token_taken.connect(_on_shared_token_taken)
-	spread_pipe.token_taken.connect(_on_spread_token_taken)
 	seq_pipe.fill_changed.connect(_on_seq_fill_changed)
-	sync_pipe.fill_changed.connect(_on_sync_fill_changed)
+	seq_pipe.token_ready.connect(_on_seq_token_ready)
+	shared_pipe.token_taken.connect(_on_shared_token_taken)
 	
-func _on_shared_token_taken(empty: bool):
+func _on_seq_token_ready():
+	pass
+	
+func _on_shared_token_taken(pipe: ScenarioPipe, empty: bool):
 	if empty:
 		set_slot_color_right(0, CLR_INACTIVE_SLOT)
 	else:
 		set_slot_color_right(0, CLR_ACTIVE_SHARED_SLOT)
 
-func _on_spread_token_taken(empty: bool):
-	if empty:
-		set_slot_color_right(1, CLR_INACTIVE_SLOT)
-	else:
-		set_slot_color_right(1, CLR_ACTIVE_SPREAD_SLOT)
-		
-func _on_sync_fill_changed(capacity_status: int):
-	pass
-	
 func _on_seq_fill_changed(capacity_status: int):
 	pass
 
@@ -93,50 +82,40 @@ func get_description():
 		return null
 
 func manage_input(pipe: ScenarioPipe, port: int = SEQ_PORT):
-	if port == SEQ_PORT:
-		seq_pipe.connect_pipe(pipe)
-	else:
-		sync_pipe.connect_pipe(pipe)
+	seq_pipe.connect_pipe(pipe)
+
 	
 func unmanage_input(node_name: String, port: int = SEQ_PORT):
-	if port == SEQ_PORT:
-		seq_pipe.disconnect_pipe(node_name)
-	else:
-		sync_pipe.disconnect_pipe(node_name)
+	seq_pipe.disconnect_pipe(node_name)
 	
 func manage_output(node_name: String, port: int = SHARED_PORT):
 	if port == SHARED_PORT:
 		shared_pipe.register(node_name)
-	else:
-		spread_pipe.register(node_name)
 	
 func unmanage_output(node_name: String, port: int = SHARED_PORT):
 	if port == SHARED_PORT:
 		shared_pipe.unregister(node_name)
-	else:
-		spread_pipe.unregister(node_name)
 		
 func get_pipe(port: int):
-	pass
+	return shared_pipe
 
-func execute():
-	#exec all executions mb JSONRPC???
-	
-	#if final node just execute and then call a final
-	if io_type == IOTYPE_EXIT:
-		finish.emit()
-	
-func check():
-	#TODO: check all checks and return total result
-	return true
-	
-func _process(delta):
-	if seq_pipe.has() and check():
-		var token = seq_pipe.pop()
-		if token:
-			execute()
-			shared_pipe.push(token)
-			spread_pipe.push(token)
+#func execute():
+	##exec all executions mb JSONRPC???
+	#
+	##if final node just execute and then call a final
+	#if io_type == IOTYPE_EXIT:
+		#finish.emit()
+	#
+#func check():
+	##TODO: check all checks and return total result
+	#return true
+	#
+#func _process(delta):
+	#if seq_pipe.has() and check():
+		#var token = seq_pipe.pop()
+		#if token:
+			#execute()
+			#shared_pipe.push(token)
 
 
 func add_execution(exec):
@@ -148,20 +127,22 @@ func remove_execution(exec):
 	pass
 
 func reset():
+	seq_pipe.sink()
 	shared_pipe.sink()
-	spread_pipe.sink()
 
 func poop_info():
 	#print(name, "inputs: ", inputs.size(), " outputs: ", outputs.size())
 	pass
 
 func pop1():
-	if seq_pipe.has():
-		seq_pipe.pop()
+	#if seq_pipe.has():
+		#seq_pipe.pop()
+	pass
 	
 func pop2():
-	if sync_pipe.has():
-		sync_pipe.pop()
+	pass
+	#if sync_pipe.has():
+		#sync_pipe.pop()
 	
 func push1():
 	var token : ScenarioToken = ScenarioToken.new()
@@ -170,4 +151,3 @@ func push1():
 	
 func push2():
 	var token : ScenarioToken = ScenarioToken.new()
-	spread_pipe.push(token)

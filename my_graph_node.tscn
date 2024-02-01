@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ifebxla7aevw"]
+[gd_scene load_steps=4 format=3 uid="uid://ifebxla7aevw"]
 
 [ext_resource type="Script" path="res://my_graph_node.gd" id="1_8sm4a"]
-[ext_resource type="Texture2D" uid="uid://bbuffg76k6uwg" path="res://icons/merge.svg" id="1_ghda7"]
 [ext_resource type="Texture2D" uid="uid://dvegy6lfsao6p" path="res://icons/TransitionSync.svg" id="1_tusa8"]
 [ext_resource type="Texture2D" uid="uid://35ir6q1l2d06" path="res://icons/TransitionEnd.svg" id="2_3tkxt"]
-[ext_resource type="Texture2D" uid="uid://lo43tm4lkspk" path="res://icons/share.svg" id="2_r5swe"]
 
 [node name="MyGraphNode" type="GraphNode"]
 custom_minimum_size = Vector2(50, 10)
@@ -21,14 +19,14 @@ slot/0/right_type = 0
 slot/0/right_color = Color(0.5, 0.5, 0.5, 1)
 slot/0/right_icon = ExtResource("1_tusa8")
 slot/0/draw_stylebox = true
-slot/1/left_enabled = true
+slot/1/left_enabled = false
 slot/1/left_type = 0
 slot/1/left_color = Color(0.862745, 0.494118, 0, 1)
-slot/1/left_icon = ExtResource("1_ghda7")
-slot/1/right_enabled = true
+slot/1/left_icon = null
+slot/1/right_enabled = false
 slot/1/right_type = 0
 slot/1/right_color = Color(0.5, 0.5, 0.5, 1)
-slot/1/right_icon = ExtResource("2_r5swe")
+slot/1/right_icon = null
 slot/1/draw_stylebox = true
 script = ExtResource("1_8sm4a")
 
