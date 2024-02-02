@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://os1n2s2ev3wr"]
+
+[ext_resource type="Script" path="res://core/nodes/model_control.gd" id="1_fftgo"]
+
+[node name="ModelControl" type="GraphNode"]
+offset_right = 9.0
+offset_bottom = 55.0
+title = "Управление моделью"
+slot/0/left_enabled = true
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = true
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_fftgo")
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+item_count = 5
+selected = 0
+popup/item_0/text = "Инициализация"
+popup/item_0/id = 2
+popup/item_1/text = "Запуск"
+popup/item_1/id = 0
+popup/item_2/text = "Шаг"
+popup/item_2/id = 3
+popup/item_3/text = "Пауза"
+popup/item_3/id = 4
+popup/item_4/text = "Останов"
+popup/item_4/id = 1

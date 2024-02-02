@@ -3,7 +3,7 @@ extends PopupMenu
 
 enum{MODE_ANY, MODE_INPUT, MODE_OUTPUT}
 
-signal node_creation_selected(mode: int, node: String, position: Vector2, new_node_type: int)
+signal node_creation_selected(mode: int, node: String, position: Vector2)
 signal node_createion_discarded()
 
 var io_node: String = ""
@@ -24,7 +24,7 @@ func custom_popup(mode: int, pos: Vector2, node: String = ""):
 	popup()
 
 func _on_index_pressed(index):
-	node_creation_selected.emit(io_mode, io_node, io_pos, index)
+	node_creation_selected.emit(index, io_node, io_pos)
 
 func _on_popup_hide():
 	node_createion_discarded.emit()

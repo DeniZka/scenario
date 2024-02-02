@@ -129,6 +129,10 @@ func remove_execution(exec):
 func reset():
 	seq_pipe.sink()
 	shared_pipe.sink()
+	for i in range(get_input_port_count()):
+		set_slot_color_left(i, Color(1,1,1))
+	for i in range(get_output_port_count()):
+		set_slot_color_right(i, CLR_INACTIVE_SLOT)
 
 func poop_info():
 	#print(name, "inputs: ", inputs.size(), " outputs: ", outputs.size())

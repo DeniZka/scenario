@@ -17,18 +17,33 @@ var output_node_state : Dictionary = {
 	"caption": "",
 }
 
-@onready var node_res : PackedScene = load("res://my_graph_node.tscn")
+@onready var nodes_res : Array[PackedScene] = [
+	load("res://core/nodes/entry.tscn"),
+	load("res://core/nodes/entry.tscn"), #FIXME: exit
+	load("res://core/nodes/compare.tscn"),
+	load("res://core/nodes/spread.tscn"),
+	load("res://core/nodes/mix.tscn"),
+	load("res://core/nodes/timer.tscn"),
+	load("res://core/nodes/failure.tscn")
+]
 var stop_drag_connection = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var menu : HBoxContainer = get_menu_hbox()
-	var play : Button = Button.new()
-	menu.add_child(play)
-	play.text = "Play"
-	play.pressed.connect(_on_play_pressed)
+	var button : Button = Button.new()
+	menu.add_child(button)
+	button.text = "Play"
+	button.pressed.connect(_on_play_pressed)
+	button = Button.new()
+	menu.add_child(button)
+	button.text = "Stop"
+	button.pressed.connect(_on_stop_pressed)
+	
 	for node in get_children():
 		if node is SpreadGraphNode:
 			node.slot_removed.connect(_on_spreadnode_slot_removed)
+	
+	
 			
 func _on_spreadnode_slot_removed(node: MyGraphNode, idx: int):
 	#check connection exists
@@ -40,12 +55,15 @@ func _on_spreadnode_slot_removed(node: MyGraphNode, idx: int):
 func _on_play_pressed():
 	#get entrance nodes
 	var token : ScenarioToken = ScenarioToken.new()
-	for node in get_children():
-		if node is MyGraphNode:
-			node.reset()
+	_on_stop_pressed()
 	for node in get_children():
 		if node is EntryGraphNode:
 			node.start(token)
+			
+func _on_stop_pressed():
+	for node in get_children():
+		if node is MyGraphNode:
+			node.reset()
 
 func _input(event):
 	if event is InputEventKey:
@@ -199,21 +217,14 @@ func _on_graph_popup_menu_node_createion_discarded():
 	pass # Replace with function body.
 
 
-func _on_graph_popup_menu_node_creation_selected(mode: int, opos_node: String, in_pos: Vector2, new_node_type: int):
-	var node : MyGraphNode = node_res.instantiate()
+func _on_graph_popup_menu_node_creation_selected(mode: int, opos_node: String, in_pos: Vector2):
+	var node : MyGraphNode = nodes_res[mode].instantiate()
 	add_child(node)
-	node.io_type = new_node_type
-	if new_node_type == MyGraphNode.IOTYPE_ENTRANCE:
-		node.color = input_node_state["color"]
-		node.set_caption(input_node_state["caption"])
-	if new_node_type == MyGraphNode.IOTYPE_EXIT:
-		node.color = output_node_state["color"]
-		node.set_caption(output_node_state["caption"])
 	node.position_offset = in_pos / zoom + scroll_offset  / zoom
-	if mode == GraphPopupMenu.MODE_INPUT:
-		_on_connection_request(opos_node, 0, node.name, 0)
-	elif mode == GraphPopupMenu.MODE_OUTPUT:
-		_on_connection_request(node.name, 0, opos_node, 0)
+	#if mode == GraphPopupMenu.MODE_INPUT:
+		#_on_connection_request(opos_node, 0, node.name, 0)
+	#elif mode == GraphPopupMenu.MODE_OUTPUT:
+		#_on_connection_request(node.name, 0, opos_node, 0)
 
 
 func _on_connection_to_empty(from_node, from_port, release_position):

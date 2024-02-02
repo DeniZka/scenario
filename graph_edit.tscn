@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c71ndsjf6u18m"]
+[gd_scene load_steps=10 format=3 uid="uid://c71ndsjf6u18m"]
 
 [ext_resource type="Script" path="res://graph_edit.gd" id="1_75k0c"]
 [ext_resource type="PackedScene" uid="uid://cvbwx5byxr5w7" path="res://graph_popup_menu.tscn" id="3_8j88t"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b77wq868esy3q" path="res://core/nodes/failure.tscn" id="6_mr3nj"]
 [ext_resource type="PackedScene" uid="uid://dtcjmfmlresst" path="res://core/nodes/timer.tscn" id="7_27ocd"]
 [ext_resource type="PackedScene" uid="uid://qltutiiy7jp7" path="res://core/nodes/compare.tscn" id="8_k7rlc"]
+[ext_resource type="PackedScene" uid="uid://os1n2s2ev3wr" path="res://core/nodes/model_control.tscn" id="9_ksmfd"]
 
 [node name="GraphEdit" type="GraphEdit"]
 offset_right = 1152.0
@@ -91,6 +92,15 @@ offset_right = 829.0
 offset_bottom = 628.0
 mouse_filter = 1
 position_offset = Vector2(8, 152)
+
+[node name="ModelControl" parent="." instance=ExtResource("9_ksmfd")]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 320.0
+offset_right = 455.0
+offset_bottom = 406.0
+mouse_filter = 1
+position_offset = Vector2(-288, 8)
 
 [connection signal="connection_drag_started" from="." to="." method="_on_connection_drag_started"]
 [connection signal="connection_from_empty" from="." to="." method="_on_connection_from_empty"]
